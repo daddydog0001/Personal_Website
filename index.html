@@ -1,238 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matt Celentano — Battery Engineer & Product Manager</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --color-bg: #eef2f5;
-      --color-primary: #0a192f;
-      --color-secondary: #112240;
-      --color-accent: #20c997;
-      --color-text: #333;
-      --font-sans: 'Helvetica Neue', Arial, sans-serif;
-    }
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      line-height: 1.6;
-      margin: 0;
-    }
-    a { color: var(--color-accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container {
-      width: 90%;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem 0;
-    }
-    header {
-      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-      text-align: center;
-      padding: 3rem 1rem;
-      color: #fff;
-    }
-    header .profile-pic {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 4px solid var(--color-accent);
-      object-fit: cover;
-      background: #fff;
-      margin-bottom: 1rem;
-    }
-    header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-    header p {
-      font-weight: 300;
-      letter-spacing: 0.5px;
-      font-size: 0.9rem;
-    }
-    nav ul {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      list-style: none;
-      padding: 1rem 0;
-    }
-    nav ul li a {
-      font-weight: 600;
-      transition: color 0.3s ease;
-      font-size: 0.9rem;
-    }
-    nav ul li a:hover { color: #fff; }
-    section {
-      background: #fff;
-      margin-top: 2rem;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    section + section { margin-top: 2.5rem; }
-    h2 {
-      font-size: 1.5rem;
-      color: var(--color-primary);
-      border-bottom: 3px solid var(--color-accent);
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .experience-list {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 0;
-    }
-    .experience-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      align-items: center;
-    }
-    .experience-item img {
-      width: 100%;
-      max-width: 150px;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    }
-    .experience-item div { text-align: center; }
-    .experience-item h3 { font-size: 1.1rem; color: var(--color-secondary); }
-    .experience-item time { font-size: 0.85rem; color: #666; }
-    .experience-item p { font-size: 0.9rem; }
-    .list-inline {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      padding: 0;
-    }
-    .list-inline li img {
-      width: 24px;
-      vertical-align: middle;
-      margin-right: 0.5rem;
-    }
-    .contact { text-align: center; font-size: 0.9rem; }
-    footer {
-      text-align: center;
-      padding: 1rem 0;
-      background: var(--color-primary);
-      color: #fff;
-      margin-top: 2.5rem;
-      font-size: 0.8rem;
-    }
-    @media (min-width: 768px) {
-      header .profile-pic {
-        width: 140px;
-        height: 140px;
-      }
-      header h1 { font-size: 2.5rem; }
-      header p { font-size: 1rem; }
-      nav ul li a { font-size: 1rem; }
-      section { padding: 2rem; }
-      .experience-item {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 1.5rem;
-      }
-      .experience-item img { max-width: 100px; }
-      .experience-item div { text-align: left; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt Celentano — Battery Engineer & Product Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif; /* Apply Inter font */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+        /* Keep custom hover effects if needed, though Tailwind classes are preferred */
+        .hover\:scale-105:hover { transform: scale(1.05); }
+        .hover\:scale-110:hover { transform: scale(1.10); }
+        .hover\:translate-y-[-5px]:hover { transform: translateY(-5px); }
+    </style>
 </head>
-<body>
-  <header>
-    <img src="images/headshot.jpg" alt="Matt Celentano" class="profile-pic">
-    <h1>Matt Celentano</h1>
-    <p>Battery Cell Engineer · Technical Product Manager · Innovator · 10+ Patent Filings</p>
-    <nav>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main class="container">
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Multidisciplinary battery cell engineer passionate about advancing energy storage innovation and sustainable transportation technologies. Experienced in battery cell design, DFMEA development, product integration, cross-functional leadership, and technical product management. Strong background in emerging technology analysis, with 10+ patent filings related to battery innovation. Committed to delivering impactful solutions at the intersection of technology, energy, and manufacturing.</p>
-    </section>
-    <section id="experience">
-      <h2>Professional Experience</h2>
-      <ul class="experience-list">
-        <li class="experience-item">
-          <img src="images/BCDC.jpg" alt="Battery Cell Development Center">
-          <div>
-            <h3>General Motors — Battery Cell Design & Release Engineer</h3>
-            <time datetime="2024-11">Nov 2024 – Present</time>
-            <p>Led the release of GM’s first-ever pilot-scale battery cell at the Battery Cell Development Center (BCDC). <a href="https://gmauthority.com/blog/2024/10/gm-to-open-ev-battery-cell-development-center-in-michigan/" target="_blank">Learn about BCDC</a>.</p>
-          </div>
-        </li>
-        <li class="experience-item">
-          <img src="images/prismatic_module.jpg" alt="Prismatic Module">
-          <div>
-            <h3>General Motors — Battery Cell Enclosure Design & Release Engineer</h3>
-            <time datetime="2023-07">Jul 2023 – Oct 2024</time>
-            <p>Led enclosure development for next-gen prismatic cells. <a href="https://investor.gm.com/news-releases/news-release-details/gm-and-lg-energy-solution-extend-battery-technology-partnership" target="_blank">Partnership details</a>.</p>
-          </div>
-        </li>
-        <li class="experience-item">
-          <img src="images/ultium_cell.png" alt="Ultium Cell"
-          <div>
-            <h3>General Motors — Battery Cell Design & Performance Engineer</h3>
-            <time datetime="2023-02">Feb 2023 – Jun 2023</time>
-            <p>Supported cell performance evaluation and design updates for the Ultium battery platform. <a href="https://news.gm.com/home.detail.html/Pages/topic/us/en/2024/dec/1210-ultium.html" target="_blank">Ultium advancements</a>.</p>
-          </div>
-        </li>
-        <li class="experience-item">
-          <img src="images/gmventures_logo.jpeg" alt="GM Ventures logo">
-          <div>
-            <h3>GM Ventures — Venture Analyst</h3>
-            <time datetime="2022-08">Aug 2022 – Jan 2023</time>
-            <p>Supported strategic investments across battery, materials, and software sectors. <a href="https://www.gmventures.com/site/us/en/gm-ventures/home.html" target="_blank">GM Ventures</a>.</p>
-          </div>
-        </li>
-        <li class="experience-item">
-          <img src="images/gm_module.jpg" alt="Ultium Module">
-          <div>
-            <h3>General Motors — Design Release Engineer, Thermal Management</h3>
-            <time datetime="2022-02">Feb 2022 – Jul 2022</time>
-            <p>Worked on thermal management components for the Ultium platform. <a href="https://www.gm.com/innovation/electrification?evar25=ch_ev-resources_what-is-ultium" target="_blank">Ultium overview</a>.</p>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <section id="publications">
-      <h2>Publications</h2>
-      <ul class="list-inline">
-        <li><a href="https://www.sae.org/publications/technical-papers/content/2022-01-0680/" target="_blank">Co-Author: SAE Technical Paper “Ice Spike Analysis for Torque Load Monitoring”</a></li>
-        <li><a href="https://www.researchdisclosure.com/database/RD725062" target="_blank">Defensive Publication: Battery Cell Assembly & Welding Innovations</a></li>
-      </ul>
-    </section>
-    <section id="certifications">
-      <h2>Certifications</h2>
-      <ul class="list-inline">
-        <li><img src="images/um_logo.png" alt="University of Michigan seal">
-          <a href="https://certificates.ope.engin.umich.edu/3f7efc55-f5c8-45ad-86db-ecf1f24471e5#acc.9vIKdmuB" target="_blank">University of Michigan: Battery Cell Manufacturing, Testing & Design</a>
-        </li>
-        <li><img src="images/vcuniversity.webp" alt="VC University logo">
-          <a href="https://venturecapitaluniversity.com/" target="_blank">VC University: Venture Capital Fundamentals</a>
-        </li>
-      </ul>
-    </section>
-    <section id="contact" class="contact">
-      <h2>Contact</h2>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/matt-celentano/" target="_blank">linkedin.com/in/matt-celentano</a></p>
-    </section>
-  </main>
-  <footer>
-    &copy; 2025 Matt Celentano. All rights reserved.
-  </footer>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-r from-[#0a192f] to-[#112240] text-white text-center py-12 px-4">
+        <img src="images/headshot.jpg"
+             alt="Matt Celentano"
+             onerror="this.onerror=null; this.src='https://placehold.co/140x140/0a192f/20c997?text=MC';"
+             class="w-24 h-24 md:w-36 md:h-36 mx-auto rounded-lg border-4 border-[#20c997] object-cover bg-white mb-4 transition-transform duration-300 ease-in-out hover:scale-110">
+        <h1 class="text-2xl md:text-4xl font-bold mb-2 transition-colors duration-300 hover:text-[#20c997]">Matt Celentano</h1>
+        <p class="text-sm md:text-base font-light text-gray-200 tracking-wide">Battery Cell Engineer · Technical Product Manager · Innovator · 10+ Patent Filings</p>
+
+        <nav class="mt-6">
+            <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 list-none p-0">
+                <li><a href="#about" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">About</a></li>
+                <li><a href="#experience" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Experience</a></li>
+                <li><a href="#patents" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Patents</a></li>
+                <li><a href="#publications" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Publications</a></li>
+                 <li><a href="#education" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Education</a></li>
+                <li><a href="#certifications" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Certifications</a></li>
+                <li><a href="#projects" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Projects</a></li>
+                <li><a href="#contact" class="text-sm md:text-base font-semibold text-gray-300 hover:text-[#20c997] transition-colors duration-300">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto max-w-4xl px-4 py-8 md:py-12">
+
+        <section id="about" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">About Me</h2>
+            <p class="text-gray-700 leading-relaxed">Multidisciplinary battery cell engineer passionate about advancing energy storage innovation and sustainable transportation technologies. Experienced in battery cell design, DFMEA development, product integration, cross-functional leadership, and technical product management. Strong background in emerging technology analysis, with 10+ patent filings related to battery innovation. Committed to delivering impactful solutions at the intersection of technology, energy, and manufacturing.</p>
+        </section>
+
+        <section id="experience" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">Professional Experience</h2>
+            <ul class="space-y-6 list-none p-0">
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/BCDC.jpg"
+                         alt="Battery Cell Development Center"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=GM+BCDC';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">General Motors — Battery Cell Design & Release Engineer</h3>
+                        <time datetime="2024-11" class="text-sm text-gray-500 block mb-2">Nov 2024 – Present</time>
+                        <p class="text-sm text-gray-600 leading-snug">Led the release of GM’s first-ever pilot-scale battery cell at the Battery Cell Development Center (BCDC). <a href="https://gmauthority.com/blog/2024/10/gm-to-open-ev-battery-cell-development-center-in-michigan/" target="_blank" class="text-[#20c997] font-medium hover:underline">Learn about BCDC</a>.</p>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/prismatic_module.jpg"
+                         alt="Prismatic Module"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Prismatic';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">General Motors — Battery Cell Enclosure Design & Release Engineer</h3>
+                        <time datetime="2023-07" class="text-sm text-gray-500 block mb-2">Jul 2023 – Oct 2024</time>
+                        <p class="text-sm text-gray-600 leading-snug">Led enclosure development for next-gen prismatic cells. <a href="https://investor.gm.com/news-releases/news-release-details/gm-and-lg-energy-solution-extend-battery-technology-partnership" target="_blank" class="text-[#20c997] font-medium hover:underline">Prismatic Enclosures</a>.</p>
+                    </div>
+                </li>
+                 <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/ultium_cell.png"
+                         alt="Ultium Cell"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Ultium';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">General Motors — Battery Cell Design & Performance Engineer</h3>
+                        <time datetime="2023-02" class="text-sm text-gray-500 block mb-2">Feb 2023 – Jun 2023</time>
+                        <p class="text-sm text-gray-600 leading-snug">Supported cell performance evaluation and design updates for the Ultium battery platform. <a href="https://news.gm.com/home.detail.html/Pages/topic/us/en/2024/dec/1210-ultium.html" target="_blank" class="text-[#20c997] font-medium hover:underline">Ultium Cells</a>.</p>
+                    </div>
+                </li>
+                 <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/gmventures_logo.jpeg"
+                         alt="GM Ventures logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=GM+Ventures';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">GM Ventures — Venture Analyst</h3>
+                        <time datetime="2022-08" class="text-sm text-gray-500 block mb-2">Aug 2022 – Jan 2023</time>
+                        <p class="text-sm text-gray-600 leading-snug">Supported strategic investments across battery, materials, and software sectors. <a href="https://www.gmventures.com/site/us/en/gm-ventures/home.html" target="_blank" class="text-[#20c997] font-medium hover:underline">GM Ventures</a>.</p>
+                    </div>
+                </li>
+                 <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/gm_module.jpg"
+                         alt="Ultium Module"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Ultium+Module';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">General Motors — Design Release Engineer, Thermal Management</h3>
+                        <time datetime="2022-02" class="text-sm text-gray-500 block mb-2">Feb 2022 – Jul 2022</time>
+                        <p class="text-sm text-gray-600 leading-snug">Developed thermal management components for the Ultium platform. <a href="https://www.gm.com/innovation/electrification?evar25=ch_ev-resources_what-is-ultium" target="_blank" class="text-[#20c997] font-medium hover:underline">Ultium overview</a>.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="patents" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">Patents (Publicly Available)</h2>
+            <ul class="space-y-6 list-none p-0">
+                 <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                     <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">BATTERY CELL CURRENT COLLECTOR TABS HAVING FEATURES TO FACILITATE ELECTRICAL CONNECTIONS</h3>
+                        <a href="https://patentcenter.uspto.gov/applications/18499539" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">US Patent Application 18/499,539</a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="publications" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">Publications</h2>
+            <ul class="space-y-6 list-none p-0">
+                 <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/SAE.png"
+                         alt="SAE International Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=SAE';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                     <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Co-Author: SAE Technical Paper “Ice Spike Analysis”</h3>
+                        <a href="https://www.sae.org/publications/technical-papers/content/2022-01-0680/" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">SAE Publication</a>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/defensive_pub.png"
+                         alt="Research Disclosure Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Research';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Defensive Publication: Direct Connection of Battery Cell to Vehicle Chassis Ground for Corrosion Protection...</h3>
+                        <a href="https://www.researchdisclosure.com/database/RD725062" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">Research Disclosure</a>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                     <img src="images/thermal_model.png"
+                         alt="Washington University in St. Louis Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=WashU';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Master's Thesis: Performance Characterization of a Novel Thermal-Fluid Exchange...</h3>
+                        <a href="documents/Energy_Analysis_and_Design_Project.pdf" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">Thesis Report</a>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                     <img src="images/greens_harvester.png"
+                         alt="Washington University in St. Louis Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=WashU';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Undergraduate Capstone Project: Improved Greens Harvester</h3>
+                        <a href="https://openscholarship.wustl.edu/mems411/133" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">Project Report</a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="education" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">Education</h2>
+            <ul class="space-y-6 list-none p-0">
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/Mckelvey.png"
+                         alt="Washington University in St. Louis Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=WashU';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Washington University in St. Louis — Master of Science in Mechanical Engineering</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Specialization in Energy Conversion & Efficiency | GPA: 4.00/4.00</p>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/WashU.png"
+                         alt="Washington University in St. Louis Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=WashU';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Washington University in St. Louis — Bachelor of Science in Mechanical Engineering</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Minor in Energy Engineering | GPA: 3.75/4.00</p>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/WashU_Olin_Business.png" alt="Olin Business School Logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Olin';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Olin Business School — Second Major in Economics & Strategy</h3>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="certifications" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">Certifications</h2>
+            <ul class="space-y-6 list-none p-0">
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/um_logo.png"
+                         alt="University of Michigan seal"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=UoM';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">University of Michigan: Battery Cell Manufacturing, Testing & Design</h3>
+                        <a href="https://certificates.ope.engin.umich.edu/3f7efc55-f5c8-45ad-86db-ecf1f24471e5#acc.9vIKdmuB" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">Certificate</a>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/vcuniversity.webp"
+                         alt="VC University logo"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=VCU';"
+                         class="w-full md:w-36 h-auto rounded-md object-contain shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">VC University: Venture Capital Fundamentals</h3>
+                        <a href="https://venturecapitaluniversity.com/" target="_blank" class="text-[#20c997] font-medium hover:underline text-sm">VC University</a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="projects" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6">Personal Projects</h2>
+            <ul class="space-y-6 list-none p-0">
+                 <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/westfield.jpg"
+                         alt="Westfield Mega S2000 Kit Car"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Kit+Car';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Westfield Mega S2000 Kit Car</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Built a Lotus Seven-inspired kit car from the ground up. This project introduced me to real-world vehicle design and laid the foundation for my interest in mobility and power systems.</p>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/gaggiuino.jpg"
+                         alt="Gaggiuino Espresso Machine Mod"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Espresso';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Gaggiuino Espresso Machine Mod</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Modified a Gaggia espresso machine to add high-end brewing control using the open-source Gaggiuino platform.</p>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/comma3.avif"
+                         alt="Self-Driving Chevy Bolt EV (Comma AI)"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=Comma+AI';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">Self-Driving Chevy Bolt EV (Comma AI)</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Outfitted my Chevy Bolt EV with Comma AI's openpilot platform, enabling hands-free driving.</p>
+                    </div>
+                </li>
+                <li class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 bg-gray-50 p-4 rounded-lg transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-md">
+                    <img src="images/portafilter.png"
+                         alt="CAD Design & 3D Printing"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/e2e8f0/64748b?text=3D+Print';"
+                         class="w-full md:w-36 h-auto rounded-md object-cover shadow-sm transition-transform duration-300 hover:scale-105">
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-lg font-semibold text-[#112240] mb-1 transition-colors duration-300 hover:text-[#20c997]">CAD Design & 3D Printing</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Designed and 3D printed parts for household projects.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="contact" class="bg-white p-6 md:p-8 rounded-lg shadow-md text-center transition-shadow duration-300 hover:shadow-lg">
+            <h2 class="text-2xl font-bold text-[#0a192f] border-b-4 border-[#20c997] pb-2 mb-6 inline-block">Contact</h2>
+            <p class="text-gray-700">
+                Connect with me on LinkedIn:
+                <a href="https://www.linkedin.com/in/matt-celentano/" target="_blank" class="text-[#20c997] font-semibold hover:underline">linkedin.com/in/matt-celentano</a>
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#0a192f] text-center py-6 px-4 mt-8 md:mt-12">
+        <p class="text-sm text-gray-400">&copy; 2025 Matt Celentano. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
