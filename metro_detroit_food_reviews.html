@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matt's Metro Detroit Food Reviews</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #151821;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --scale-color: #38bdf8;
+      --chip: #1f2937;
+      --border: #232634;
+      --panel: #0f1220;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+    }
+    aside {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 20px;
+      width: 200px;
+      flex-shrink: 0;
+    }
+    aside h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .scale-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tile {
+      background: var(--scale-color);
+      color: black;
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .tile .num { display: block; font-size: 16px; }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 20px; border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 4px; font-size: 28px; }
+    .sub { color: var(--muted); font-size: 14px; }
+    .controls {
+      display: grid; gap: 10px; grid-template-columns: 1fr;
+      margin: 14px 0 0;
+    }
+    @media (min-width: 700px) { .controls { grid-template-columns: 1fr 220px 220px; } }
+    .input, .select {
+      background: var(--card); color: var(--text); border: 1px solid var(--border);
+      padding: 10px 12px; border-radius: 10px; outline: none; width: 100%;
+    }
+    .stats {
+      margin-top: 8px; display: flex; gap: 8px;
+    }
+    .pill { display:inline-flex; gap:6px; align-items:center; border:1px solid var(--border); background:var(--chip);
+      padding:6px 8px; border-radius:999px; font-size: 12px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 18px 0 40px; padding: 0 20px; }
+    @media (min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px; transition: transform .12s ease, border-color .12s ease;
+    }
+    .card:hover { transform: translateY(-1px); border-color: #2a2f3f; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .name { font-weight: 600; font-size: 15px; letter-spacing: .2px; }
+    .score {
+      margin-left: auto; background: var(--chip); border: 1px solid var(--border);
+      padding: 4px 8px; border-radius: 999px; font-variant-numeric: tabular-nums;
+      font-size: 13px;
+    }
+    .barWrap { margin-top: 8px; height: 8px; background: #0f1220; border: 1px solid var(--border);
+      border-radius: 999px; overflow: hidden; }
+    .bar { height: 100%; width: 0%; background: var(--scale-color); }
+  </style>
+</head>
+<body>
+  <aside>
+    <h2>Rating Scale</h2>
+    <div class="scale-vertical">
+      <div class="tile"><span class="num">10</span>Impossible</div>
+      <div class="tile"><span class="num">9</span>Excellent</div>
+      <div class="tile"><span class="num">8</span>Extremely Good</div>
+      <div class="tile"><span class="num">7</span>Very Good</div>
+      <div class="tile"><span class="num">6</span>Good</div>
+      <div class="tile"><span class="num">5</span>Would Eat Again</div>
+      <div class="tile"><span class="num">4</span>Would Not Recommend</div>
+      <div class="tile"><span class="num">3</span>Pretty Bad</div>
+      <div class="tile"><span class="num">2</span>Absolutely Terrible</div>
+      <div class="tile"><span class="num">1</span>Inedible</div>
+    </div>
+  </aside>
+  <main>
+    <header>
+      <h1>Matt's Metro Detroit Food Reviews</h1>
+      <div class="sub">Exploring the best (and worst) of Metro Detroit's food scene.</div>
+      <div class="controls">
+        <input id="search" class="input" placeholder="Search restaurants…" spellcheck="false" />
+        <select id="sort" class="select">
+          <option value="score_desc">Sort: Rating (high → low)</option>
+          <option value="score_asc">Sort: Rating (low → high)</option>
+          <option value="name_asc">Sort: Name (A → Z)</option>
+          <option value="name_desc">Sort: Name (Z → A)</option>
+        </select>
+        <select id="min" class="select">
+          <option value="0">Filter: Min rating (any)</option>
+          <option value="6">Min 6.0</option>
+          <option value="7">Min 7.0</option>
+          <option value="8">Min 8.0</option>
+          <option value="9">Min 9.0</option>
+        </select>
+      </div>
+      <div class="stats">
+        <span class="pill"><b id="count">0</b> restaurants</span>
+        <span class="pill"><span>Average</span> <b id="avg">–</b></span>
+        <span class="pill"><span>Median</span> <b id="med">–</b></span>
+      </div>
+    </header>
+    <div id="grid" class="grid"></div>
+  </main>
+  <script>
+    const DATA = [{"name": "Albena", "score": 9.5}, {"name": "Mabel Gray", "score": 9.0}, {"name": "Bar pigalle", "score": 9.0}, {"name": "Freya", "score": 8.5}, {"name": "Loui\u2019s Pizza", "score": 8.5}, {"name": "Buddy's Pizza", "score": 8.0}, {"name": "Himalayan Flames", "score": 8.0}, {"name": "Selden Standard", "score": 8.0}, {"name": "Supergeil", "score": 8.0}, {"name": "Supinos", "score": 8.0}, {"name": "Zingermans", "score": 8.0}, {"name": "Barda", "score": 8.0}, {"name": "Little Lou's", "score": 8.0}, {"name": "The Rind", "score": 8.0}, {"name": "Oak Parker", "score": 8.0}, {"name": "Takoi", "score": 8.0}, {"name": "Daebak", "score": 8.0}, {"name": "Nawab British Indian Cuisine", "score": 8.0}, {"name": "Pho tai", "score": 8.0}, {"name": "Old Bruce J BBQ", "score": 8.0}, {"name": "Frida Batidos", "score": 8.0}, {"name": "Pink Garlic", "score": 7.5}, {"name": "Dae Jang Keum (kbbq)", "score": 7.5}, {"name": "Jet's Pizza", "score": 7.5}, {"name": "Bigalora", "score": 7.5}, {"name": "City Ramen", "score": 7.5}, {"name": "Gran Castor", "score": 7.5}, {"name": "Haraz Warren", "score": 7.5}, {"name": "Owl", "score": 7.5}, {"name": "Pastio", "score": 7.5}, {"name": "Public House", "score": 7.5}, {"name": "Sushi Hana", "score": 7.5}, {"name": "Beppe", "score": 7.5}, {"name": "Baobab fare", "score": 7.5}, {"name": "Kacha Thai", "score": 7.5}, {"name": "Stone House", "score": 7.5}, {"name": "Employee meal", "score": 7.5}, {"name": "Mongers", "score": 7.5}, {"name": "Marrow", "score": 7.5}, {"name": "Savana Blue", "score": 7.5}, {"name": "Grey Ghost", "score": 7.5}, {"name": "Czapski kitchen", "score": 7.5}, {"name": "Father Forgive Me", "score": 7.5}, {"name": "Shields", "score": 7.5}, {"name": "Bar Louie", "score": 7.0}, {"name": "Barrio Cocina", "score": 7.0}, {"name": "Culantro", "score": 7.0}, {"name": "Dave's Hot Chicken", "score": 7.0}, {"name": "Highlands", "score": 7.0}, {"name": "Imperial", "score": 7.0}, {"name": "Michigan and Trumbull", "score": 7.0}, {"name": "Noodle Topia", "score": 7.0}, {"name": "Tin Roof", "score": 7.0}, {"name": "Woodpile bbq", "score": 7.0}, {"name": "Detroit75", "score": 7.0}, {"name": "Zarzoor", "score": 7.0}, {"name": "One World Market", "score": 7.0}, {"name": "Oasis Grill", "score": 7.0}, {"name": "Ima Ramen", "score": 7.0}, {"name": "Clawson Steakhouse", "score": 7.0}, {"name": "Johnny Noodle King", "score": 7.0}, {"name": "Kabob house", "score": 7.0}, {"name": "Palazzo Di Pizza", "score": 7.0}, {"name": "Shun Ramen", "score": 7.0}, {"name": "Sylvan Table", "score": 7.0}, {"name": "Taques", "score": 7.0}, {"name": "Portillos", "score": 7.0}, {"name": "Ventimiglia", "score": 7.0}, {"name": "Bangkok Bistro", "score": 6.5}, {"name": "El Barzon", "score": 6.5}, {"name": "Jersey Bagels", "score": 6.5}, {"name": "Olin Bar and Kitchen", "score": 6.5}, {"name": "Sake Sushi", "score": 6.5}, {"name": "Slows BBQ", "score": 6.5}, {"name": "Tienda Mexicana", "score": 6.5}, {"name": "Yemen Cafe", "score": 6.5}, {"name": "Berkley Commons", "score": 6.5}, {"name": "Pitaway (Berkley)", "score": 6.5}, {"name": "Mr Kabob", "score": 6.5}, {"name": "Medaterreno", "score": 6.5}, {"name": "Kouzina", "score": 6.5}, {"name": "Pops for Italian", "score": 6.5}, {"name": "Condado Tacos", "score": 6.5}, {"name": "Republica", "score": 6.5}, {"name": "Green Dot Stables", "score": 6.0}, {"name": "Amici's", "score": 6.0}, {"name": "Checker Bar", "score": 6.0}, {"name": "Como's", "score": 6.0}, {"name": "Detroit Eatery", "score": 6.0}, {"name": "Voyager", "score": 6.0}, {"name": "Los Tres Amigos", "score": 6.0}, {"name": "Yard house", "score": 6.0}, {"name": "Royale with Cheese", "score": 6.0}, {"name": "Ladder 4 Wine Bar", "score": 6.0}, {"name": "Bucharest grill", "score": 6.0}, {"name": "Nicky D's Coney Island", "score": 6.0}, {"name": "Som Jai", "score": 6.0}, {"name": "Momo cha", "score": 6.0}, {"name": "Shangra la", "score": 6.0}, {"name": "Le Supreme", "score": 6.0}, {"name": "Crispelli's Pizza", "score": 5.5}, {"name": "Ale Mary's", "score": 5.5}, {"name": "Balkan House", "score": 5.5}, {"name": "Detroit Institute of Bagels", "score": 5.5}, {"name": "Fogo De Chao", "score": 5.5}, {"name": "Hunters Hamburgers", "score": 5.5}, {"name": "Jersey Bagel", "score": 5.5}, {"name": "Jim Brady's", "score": 5.5}, {"name": "KPOT", "score": 5.5}, {"name": "Malek Al-Kabob", "score": 5.5}, {"name": "SheWolf", "score": 5.5}, {"name": "Vinsetta Garage", "score": 5.5}, {"name": "Noor Jahan", "score": 5.5}, {"name": "Cantaritos", "score": 5.5}, {"name": "Polish Village Caf\u00e9", "score": 5.5}, {"name": "Ashoka", "score": 5.5}, {"name": "Touch of India", "score": 5.5}, {"name": "La saj", "score": 5.5}, {"name": "Happy's Pizza", "score": 5.5}, {"name": "Turkish cafe", "score": 5.5}, {"name": "Evie's Tamales", "score": 5.5}, {"name": "Howe's bayou", "score": 5.5}, {"name": "TAQ", "score": 5.5}, {"name": "Deccan Delights", "score": 5.5}, {"name": "Middle eats", "score": 5.5}, {"name": "Pi sci", "score": 5.0}, {"name": "Casa Amado", "score": 5.0}, {"name": "Ford's Garage", "score": 5.0}, {"name": "Joe's Grill", "score": 5.0}, {"name": "Qawah House", "score": 5.0}, {"name": "Royal Oak Masala", "score": 5.0}, {"name": "Trizest", "score": 5.0}, {"name": "Little Saigon", "score": 5.0}, {"name": "Hopcat", "score": 5.0}, {"name": "Kams Express", "score": 5.0}, {"name": "Alex's of Berkley", "score": 5.0}, {"name": "Villa Italian Restaurant", "score": 5.0}, {"name": "Mito Hibachi", "score": 5.0}, {"name": "Chi Fan", "score": 5.0}, {"name": "Shaad Deshi", "score": 5.0}, {"name": "Zo's burgers", "score": 5.0}, {"name": "Antica nova", "score": 5.0}, {"name": "North End Tap Room", "score": 5.0}, {"name": "Sweetwater Tavern", "score": 4.5}, {"name": "Jose's Tacos", "score": 4.5}, {"name": "Leila", "score": 4.5}, {"name": "Redcoat Tavern", "score": 4.5}, {"name": "Resturant", "score": 4.5}, {"name": "Zeoli's", "score": 4.5}, {"name": "Mi Pueblo", "score": 4.5}, {"name": "88 Bahn Mi", "score": 4.5}, {"name": "Kabab Royale", "score": 4.5}, {"name": "Big Daddy BBQ", "score": 4.5}, {"name": "Greek Island Coney", "score": 4.5}, {"name": "Eddie Gormet", "score": 4.5}, {"name": "Motor city brewing", "score": 4.5}, {"name": "Little Bros Burgers", "score": 4.0}, {"name": "Milan Pizza", "score": 4.0}, {"name": "Savvy Sliders", "score": 4.0}, {"name": "Trattoria da Luigi", "score": 4.0}, {"name": "Vivios", "score": 4.0}, {"name": "Rogers Roost", "score": 4.0}, {"name": "Mici", "score": 4.0}, {"name": "Eatori Market", "score": 4.0}, {"name": "Sedona Grill", "score": 4.0}, {"name": "Alpino", "score": 4.0}, {"name": "Oak Park Social", "score": 4.0}, {"name": "Market North End", "score": 4.0}, {"name": "Bandit", "score": 4.0}, {"name": "Lily's seafood", "score": 4.0}, {"name": "Black Label Tavern", "score": 3.5}, {"name": "The Telway", "score": 3.5}, {"name": "Lockhart's BBQ", "score": 3.0}, {"name": "Sava's", "score": 3.0}, {"name": "Le crepe", "score": 3.0}, {"name": "Aladdin", "score": 2.5}, {"name": "American Coney Island", "score": 2.0}, {"name": "Big Boy", "score": 2.0}, {"name": "Astoria Pastry Shop", "score": 1.0}];
+    let items = [...DATA];
+    const $grid = document.getElementById('grid');
+    const $search = document.getElementById('search');
+    const $sort = document.getElementById('sort');
+    const $min = document.getElementById('min');
+    const $count = document.getElementById('count');
+    const $avg = document.getElementById('avg');
+    const $med = document.getElementById('med');
+    function render(list) {
+      $grid.innerHTML = '';
+      for (const r of list) {
+        const pct = Math.max(0, Math.min(100, (r.score/10)*100));
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="row">
+            <div class="name">${escapeHTML(r.name)}</div>
+            <div class="score">${r.score.toFixed(1)} / 10</div>
+          </div>
+          <div class="barWrap"><div class="bar" style="width:${pct}%"></div></div>
+        `;
+        $grid.appendChild(card);
+      }
+      $count.textContent = list.length.toString();
+      if (list.length) {
+        const scores = list.map(x => x.score).sort((a,b)=>a-b);
+        const avg = scores.reduce((s,v)=>s+v,0)/scores.length;
+        const med = scores[Math.floor(scores.length/2)];
+        $avg.textContent = avg.toFixed(2);
+        $med.textContent = med.toFixed(1);
+      } else {
+        $avg.textContent = '–';
+        $med.textContent = '–';
+      }
+    }
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'})[c]);
+    }
+    function applyFilters() {
+      const q = $search.value.trim().toLowerCase();
+      const min = parseFloat($min.value || '0');
+      let list = items.filter(r => r.score >= min && (!q || r.name.toLowerCase().includes(q)));
+      const sort = $sort.value;
+      if (sort === 'score_desc') list.sort((a,b)=>b.score-a.score);
+      if (sort === 'score_asc') list.sort((a,b)=>a.score-b.score);
+      if (sort === 'name_asc') list.sort((a,b)=>a.name.localeCompare(b.name));
+      if (sort === 'name_desc') list.sort((a,b)=>b.name.localeCompare(a.name));
+      render(list);
+    }
+    applyFilters();
+    for (const el of [$search, $sort, $min]) el.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>
