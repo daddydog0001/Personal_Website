@@ -4,111 +4,280 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt's Metro Detroit Food Reviews</title>
+  <!-- Link to Google Fonts for the 'Inter' font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* * ==============================================
+     * CSS Variables for Theming
+     * ==============================================
+     */
     :root {
-      --bg: #0b0c10;
-      --card: #151821;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --scale-color: #38bdf8;
-      --chip: #1f2937;
-      --border: #232634;
-      --panel: #0f1220;
+      --bg: #111827; /* Dark blue-gray background */
+      --panel: #1f2937; /* Slightly lighter panel color */
+      --card: #1f2937; /* Card background */
+      --text: #f3f4f6; /* Light gray text for high contrast */
+      --muted: #9ca3af; /* Muted text for subtitles and secondary info */
+      --accent: #3b82f6; /* A vibrant blue for accents and focus states */
+      --border: #374151; /* Subtle border color */
+      --chip: #374151; /* Background for pills/tags */
     }
-    * { box-sizing: border-box; }
+
+    /* * ==============================================
+     * General Body and Layout Styles
+     * ==============================================
+     */
+    * { 
+      box-sizing: border-box; 
+    }
+
     body {
-      margin: 0; background: var(--bg); color: var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      line-height: 1.4;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
       display: flex;
-      flex-direction: row;
+      flex-direction: column; /* Mobile-first: stack elements vertically */
       min-height: 100vh;
     }
+
+    /* * ==============================================
+     * Aside (Sidebar) Styles
+     * ==============================================
+     */
     aside {
       background: var(--panel);
-      border-right: 1px solid var(--border);
-      padding: 20px;
-      width: 200px;
-      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      width: 100%;
     }
+
     aside h2 {
-      font-size: 18px;
-      margin-bottom: 12px;
+      font-size: 1.25rem;
+      margin: 0 0 1rem;
     }
-    .scale-vertical {
+
+    .scale-container {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      flex-direction: row; /* Horizontal on mobile */
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping on small screens */
     }
+
     .tile {
-      background: var(--scale-color);
-      color: black;
-      border-radius: 8px;
-      padding: 6px;
+      color: #ffffff;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
       text-align: center;
       font-weight: 600;
+      font-size: 0.875rem;
     }
-    .tile .num { display: block; font-size: 16px; }
+
+    .tile .num {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    /* * ==============================================
+     * Main Content Styles
+     * ==============================================
+     */
     main {
-      flex: 1;
       display: flex;
       flex-direction: column;
+      flex: 1;
     }
+
     header {
-      padding: 20px; border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
     }
-    h1 { margin: 0 0 4px; font-size: 28px; }
-    .sub { color: var(--muted); font-size: 14px; }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 60ch; /* Improve readability */
+    }
+
     .controls {
-      display: grid; gap: 10px; grid-template-columns: 1fr;
-      margin: 14px 0 0;
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: 1fr; /* Single column on mobile */
+      margin-top: 1.5rem;
     }
-    @media (min-width: 700px) { .controls { grid-template-columns: 1fr 220px 220px; } }
+
     .input, .select {
-      background: var(--card); color: var(--text); border: 1px solid var(--border);
-      padding: 10px 12px; border-radius: 10px; outline: none; width: 100%;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      outline: none;
+      width: 100%;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
+
+    .input:focus, .select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+    }
+
     .stats {
-      margin-top: 8px; display: flex; gap: 8px;
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
-    .pill { display:inline-flex; gap:6px; align-items:center; border:1px solid var(--border); background:var(--chip);
-      padding:6px 8px; border-radius:999px; font-size: 12px; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 18px 0 40px; padding: 0 20px; }
-    @media (min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+    .pill {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      border: 1px solid var(--border);
+      background: var(--chip);
+      padding: 0.5rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+    }
+
+    .pill b {
+      font-weight: 600;
+    }
+
+    /* * ==============================================
+     * Restaurant Grid and Card Styles
+     * ==============================================
+     */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr; /* Single column on mobile */
+      gap: 1rem;
+      padding: 1.5rem;
+      margin: 0;
+    }
+
     .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 14px; transition: transform .12s ease, border-color .12s ease;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
-    .card:hover { transform: translateY(-1px); border-color: #2a2f3f; }
-    .row { display: flex; align-items: center; gap: 12px; }
-    .name { font-weight: 600; font-size: 15px; letter-spacing: .2px; }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .name {
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+
     .score {
-      margin-left: auto; background: var(--chip); border: 1px solid var(--border);
-      padding: 4px 8px; border-radius: 999px; font-variant-numeric: tabular-nums;
-      font-size: 13px;
+      margin-left: auto;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
     }
-    .barWrap { margin-top: 8px; height: 8px; background: #0f1220; border: 1px solid var(--border);
-      border-radius: 999px; overflow: hidden; }
-    .bar { height: 100%; width: 0%; background: var(--scale-color); }
+
+    .barWrap {
+      height: 0.625rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: width 0.4s ease-in-out;
+    }
+
+    /* * ==============================================
+     * Responsive Design (Desktop)
+     * ==============================================
+     */
+    @media (min-width: 768px) {
+      body {
+        flex-direction: row; /* Side-by-side layout on desktop */
+      }
+
+      aside {
+        border-bottom: 0;
+        border-right: 1px solid var(--border);
+        width: 230px; /* UPDATED: Narrower sidebar */
+        flex-shrink: 0;
+        height: 100vh;
+        position: sticky; /* Keep sidebar visible on scroll */
+        top: 0;
+      }
+
+      .scale-container {
+        flex-direction: column; /* Stack tiles vertically on desktop */
+      }
+
+      .controls {
+        grid-template-columns: 1fr 200px 200px; /* Multi-column controls */
+      }
+
+      .grid {
+        /* Auto-fit columns, ensuring they are at least 320px wide */
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .grid {
+        grid-template-columns: 1fr 1fr; /* Max two columns on very large screens */
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Sidebar for rating scale -->
   <aside>
     <h2>Rating Scale</h2>
-    <div class="scale-vertical">
-      <div class="tile"><span class="num">10</span>Impossible</div>
-      <div class="tile"><span class="num">9</span>Excellent</div>
-      <div class="tile"><span class="num">8</span>Extremely Good</div>
-      <div class="tile"><span class="num">7</span>Very Good</div>
-      <div class="tile"><span class="num">6</span>Good</div>
-      <div class="tile"><span class="num">5</span>Would Eat Again</div>
-      <div class="tile"><span class="num">4</span>Would Not Recommend</div>
-      <div class="tile"><span class="num">3</span>Pretty Bad</div>
-      <div class="tile"><span class="num">2</span>Absolutely Terrible</div>
-      <div class="tile"><span class="num">1</span>Inedible</div>
+    <div class="scale-container">
+        <div class="tile" style="background-color: #22c55e;"><span class="num">10</span> Impossible</div>
+        <div class="tile" style="background-color: #4ade80;"><span class="num">9</span> Excellent</div>
+        <div class="tile" style="background-color: #84cc16;"><span class="num">8</span> Extremely Good</div>
+        <div class="tile" style="background-color: #a3e635;"><span class="num">7</span> Very Good</div>
+        <div class="tile" style="background-color: #facc15;"><span class="num">6</span> Good</div>
+        <div class="tile" style="background-color: #fbbf24;"><span class="num">5</span> Would Eat Again</div>
+        <div class="tile" style="background-color: #f97316;"><span class="num">4</span> Not Recommended</div>
+        <div class="tile" style="background-color: #ef4444;"><span class="num">3</span> Pretty Bad</div>
+        <div class="tile" style="background-color: #dc2626;"><span class="num">2</span> Terrible</div>
+        <div class="tile" style="background-color: #b91c1c;"><span class="num">1</span> Inedible</div>
     </div>
   </aside>
+
+  <!-- Main content area -->
   <main>
     <header>
       <h1>Matt's Metro Detroit Food Reviews</h1>
@@ -137,9 +306,15 @@
     </header>
     <div id="grid" class="grid"></div>
   </main>
+
   <script>
+    // The dataset of restaurant reviews
     const DATA = [{"name": "Albena", "score": 9.5}, {"name": "Mabel Gray", "score": 9.0}, {"name": "Bar pigalle", "score": 9.0}, {"name": "Freya", "score": 8.5}, {"name": "Loui\u2019s Pizza", "score": 8.5}, {"name": "Buddy's Pizza", "score": 8.0}, {"name": "Himalayan Flames", "score": 8.0}, {"name": "Selden Standard", "score": 8.0}, {"name": "Supergeil", "score": 8.0}, {"name": "Supinos", "score": 8.0}, {"name": "Zingermans", "score": 8.0}, {"name": "Barda", "score": 8.0}, {"name": "Little Lou's", "score": 8.0}, {"name": "The Rind", "score": 8.0}, {"name": "Oak Parker", "score": 8.0}, {"name": "Takoi", "score": 8.0}, {"name": "Daebak", "score": 8.0}, {"name": "Nawab British Indian Cuisine", "score": 8.0}, {"name": "Pho tai", "score": 8.0}, {"name": "Old Bruce J BBQ", "score": 8.0}, {"name": "Frida Batidos", "score": 8.0}, {"name": "Pink Garlic", "score": 7.5}, {"name": "Dae Jang Keum (kbbq)", "score": 7.5}, {"name": "Jet's Pizza", "score": 7.5}, {"name": "Bigalora", "score": 7.5}, {"name": "City Ramen", "score": 7.5}, {"name": "Gran Castor", "score": 7.5}, {"name": "Haraz Warren", "score": 7.5}, {"name": "Owl", "score": 7.5}, {"name": "Pastio", "score": 7.5}, {"name": "Public House", "score": 7.5}, {"name": "Sushi Hana", "score": 7.5}, {"name": "Beppe", "score": 7.5}, {"name": "Baobab fare", "score": 7.5}, {"name": "Kacha Thai", "score": 7.5}, {"name": "Stone House", "score": 7.5}, {"name": "Employee meal", "score": 7.5}, {"name": "Mongers", "score": 7.5}, {"name": "Marrow", "score": 7.5}, {"name": "Savana Blue", "score": 7.5}, {"name": "Grey Ghost", "score": 7.5}, {"name": "Czapski kitchen", "score": 7.5}, {"name": "Father Forgive Me", "score": 7.5}, {"name": "Shields", "score": 7.5}, {"name": "Bar Louie", "score": 7.0}, {"name": "Barrio Cocina", "score": 7.0}, {"name": "Culantro", "score": 7.0}, {"name": "Dave's Hot Chicken", "score": 7.0}, {"name": "Highlands", "score": 7.0}, {"name": "Imperial", "score": 7.0}, {"name": "Michigan and Trumbull", "score": 7.0}, {"name": "Noodle Topia", "score": 7.0}, {"name": "Tin Roof", "score": 7.0}, {"name": "Woodpile bbq", "score": 7.0}, {"name": "Detroit75", "score": 7.0}, {"name": "Zarzoor", "score": 7.0}, {"name": "One World Market", "score": 7.0}, {"name": "Oasis Grill", "score": 7.0}, {"name": "Ima Ramen", "score": 7.0}, {"name": "Clawson Steakhouse", "score": 7.0}, {"name": "Johnny Noodle King", "score": 7.0}, {"name": "Kabob house", "score": 7.0}, {"name": "Palazzo Di Pizza", "score": 7.0}, {"name": "Shun Ramen", "score": 7.0}, {"name": "Sylvan Table", "score": 7.0}, {"name": "Taques", "score": 7.0}, {"name": "Portillos", "score": 7.0}, {"name": "Ventimiglia", "score": 7.0}, {"name": "Bangkok Bistro", "score": 6.5}, {"name": "El Barzon", "score": 6.5}, {"name": "Jersey Bagels", "score": 6.5}, {"name": "Olin Bar and Kitchen", "score": 6.5}, {"name": "Sake Sushi", "score": 6.5}, {"name": "Slows BBQ", "score": 6.5}, {"name": "Tienda Mexicana", "score": 6.5}, {"name": "Yemen Cafe", "score": 6.5}, {"name": "Berkley Commons", "score": 6.5}, {"name": "Pitaway (Berkley)", "score": 6.5}, {"name": "Mr Kabob", "score": 6.5}, {"name": "Medaterreno", "score": 6.5}, {"name": "Kouzina", "score": 6.5}, {"name": "Pops for Italian", "score": 6.5}, {"name": "Condado Tacos", "score": 6.5}, {"name": "Republica", "score": 6.5}, {"name": "Green Dot Stables", "score": 6.0}, {"name": "Amici's", "score": 6.0}, {"name": "Checker Bar", "score": 6.0}, {"name": "Como's", "score": 6.0}, {"name": "Detroit Eatery", "score": 6.0}, {"name": "Voyager", "score": 6.0}, {"name": "Los Tres Amigos", "score": 6.0}, {"name": "Yard house", "score": 6.0}, {"name": "Royale with Cheese", "score": 6.0}, {"name": "Ladder 4 Wine Bar", "score": 6.0}, {"name": "Bucharest grill", "score": 6.0}, {"name": "Nicky D's Coney Island", "score": 6.0}, {"name": "Som Jai", "score": 6.0}, {"name": "Momo cha", "score": 6.0}, {"name": "Shangra la", "score": 6.0}, {"name": "Le Supreme", "score": 6.0}, {"name": "Crispelli's Pizza", "score": 5.5}, {"name": "Ale Mary's", "score": 5.5}, {"name": "Balkan House", "score": 5.5}, {"name": "Detroit Institute of Bagels", "score": 5.5}, {"name": "Fogo De Chao", "score": 5.5}, {"name": "Hunters Hamburgers", "score": 5.5}, {"name": "Jersey Bagel", "score": 5.5}, {"name": "Jim Brady's", "score": 5.5}, {"name": "KPOT", "score": 5.5}, {"name": "Malek Al-Kabob", "score": 5.5}, {"name": "SheWolf", "score": 5.5}, {"name": "Vinsetta Garage", "score": 5.5}, {"name": "Noor Jahan", "score": 5.5}, {"name": "Cantaritos", "score": 5.5}, {"name": "Polish Village Caf\u00e9", "score": 5.5}, {"name": "Ashoka", "score": 5.5}, {"name": "Touch of India", "score": 5.5}, {"name": "La saj", "score": 5.5}, {"name": "Happy's Pizza", "score": 5.5}, {"name": "Turkish cafe", "score": 5.5}, {"name": "Evie's Tamales", "score": 5.5}, {"name": "Howe's bayou", "score": 5.5}, {"name": "TAQ", "score": 5.5}, {"name": "Deccan Delights", "score": 5.5}, {"name": "Middle eats", "score": 5.5}, {"name": "Pi sci", "score": 5.0}, {"name": "Casa Amado", "score": 5.0}, {"name": "Ford's Garage", "score": 5.0}, {"name": "Joe's Grill", "score": 5.0}, {"name": "Qawah House", "score": 5.0}, {"name": "Royal Oak Masala", "score": 5.0}, {"name": "Trizest", "score": 5.0}, {"name": "Little Saigon", "score": 5.0}, {"name": "Hopcat", "score": 5.0}, {"name": "Kams Express", "score": 5.0}, {"name": "Alex's of Berkley", "score": 5.0}, {"name": "Villa Italian Restaurant", "score": 5.0}, {"name": "Mito Hibachi", "score": 5.0}, {"name": "Chi Fan", "score": 5.0}, {"name": "Shaad Deshi", "score": 5.0}, {"name": "Zo's burgers", "score": 5.0}, {"name": "Antica nova", "score": 5.0}, {"name": "North End Tap Room", "score": 5.0}, {"name": "Sweetwater Tavern", "score": 4.5}, {"name": "Jose's Tacos", "score": 4.5}, {"name": "Leila", "score": 4.5}, {"name": "Redcoat Tavern", "score": 4.5}, {"name": "Resturant", "score": 4.5}, {"name": "Zeoli's", "score": 4.5}, {"name": "Mi Pueblo", "score": 4.5}, {"name": "88 Bahn Mi", "score": 4.5}, {"name": "Kabab Royale", "score": 4.5}, {"name": "Big Daddy BBQ", "score": 4.5}, {"name": "Greek Island Coney", "score": 4.5}, {"name": "Eddie Gormet", "score": 4.5}, {"name": "Motor city brewing", "score": 4.5}, {"name": "Little Bros Burgers", "score": 4.0}, {"name": "Milan Pizza", "score": 4.0}, {"name": "Savvy Sliders", "score": 4.0}, {"name": "Trattoria da Luigi", "score": 4.0}, {"name": "Vivios", "score": 4.0}, {"name": "Rogers Roost", "score": 4.0}, {"name": "Mici", "score": 4.0}, {"name": "Eatori Market", "score": 4.0}, {"name": "Sedona Grill", "score": 4.0}, {"name": "Alpino", "score": 4.0}, {"name": "Oak Park Social", "score": 4.0}, {"name": "Market North End", "score": 4.0}, {"name": "Bandit", "score": 4.0}, {"name": "Lily's seafood", "score": 4.0}, {"name": "Black Label Tavern", "score": 3.5}, {"name": "The Telway", "score": 3.5}, {"name": "Lockhart's BBQ", "score": 3.0}, {"name": "Sava's", "score": 3.0}, {"name": "Le crepe", "score": 3.0}, {"name": "Aladdin", "score": 2.5}, {"name": "American Coney Island", "score": 2.0}, {"name": "Big Boy", "score": 2.0}, {"name": "Astoria Pastry Shop", "score": 1.0}];
+    
+    // Make a mutable copy of the data
     let items = [...DATA];
+
+    // Get references to DOM elements
     const $grid = document.getElementById('grid');
     const $search = document.getElementById('search');
     const $sort = document.getElementById('sort');
@@ -147,26 +322,51 @@
     const $count = document.getElementById('count');
     const $avg = document.getElementById('avg');
     const $med = document.getElementById('med');
+
+    // Color mapping for scores
+    const scoreColors = {
+      10: '#22c55e', 9: '#4ade80', 8: '#84cc16', 7: '#a3e635',
+      6: '#facc15', 5: '#fbbf24', 4: '#f97316', 3: '#ef4444',
+      2: '#dc2626', 1: '#b91c1c'
+    };
+
+    /**
+     * Gets a color for a given score.
+     * @param {number} score - The restaurant's score.
+     * @returns {string} A hex color code.
+     */
+    function getColorForScore(score) {
+      const baseScore = Math.floor(score);
+      return scoreColors[baseScore] || '#9ca3af'; // Default to muted color
+    }
+
+    /**
+     * Renders a list of restaurants to the grid and updates stats.
+     * @param {Array<Object>} list - The array of restaurant objects to render.
+     */
     function render(list) {
-      $grid.innerHTML = '';
+      $grid.innerHTML = ''; // Clear the grid first
       for (const r of list) {
-        const pct = Math.max(0, Math.min(100, (r.score/10)*100));
+        const pct = Math.max(0, Math.min(100, (r.score / 10) * 100));
+        const color = getColorForScore(r.score);
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
           <div class="row">
             <div class="name">${escapeHTML(r.name)}</div>
-            <div class="score">${r.score.toFixed(1)} / 10</div>
+            <div class="score">${r.score.toFixed(1)}</div>
           </div>
-          <div class="barWrap"><div class="bar" style="width:${pct}%"></div></div>
+          <div class="barWrap"><div class="bar" style="width:${pct}%; background-color: ${color};"></div></div>
         `;
         $grid.appendChild(card);
       }
+      
+      // Update statistics
       $count.textContent = list.length.toString();
       if (list.length) {
-        const scores = list.map(x => x.score).sort((a,b)=>a-b);
-        const avg = scores.reduce((s,v)=>s+v,0)/scores.length;
-        const med = scores[Math.floor(scores.length/2)];
+        const scores = list.map(x => x.score).sort((a, b) => a - b);
+        const avg = scores.reduce((s, v) => s + v, 0) / scores.length;
+        const med = scores[Math.floor(scores.length / 2)];
         $avg.textContent = avg.toFixed(2);
         $med.textContent = med.toFixed(1);
       } else {
@@ -174,22 +374,43 @@
         $med.textContent = '–';
       }
     }
+
+    /**
+     * Escapes HTML to prevent XSS attacks.
+     * @param {string} str - The string to escape.
+     * @returns {string} The escaped string.
+     */
     function escapeHTML(str) {
-      return str.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'})[c]);
+      return str.replace(/[&<>'"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'})[c]);
     }
+
+    /**
+     * Applies all filters and sorting, then re-renders the list.
+     */
     function applyFilters() {
       const q = $search.value.trim().toLowerCase();
       const min = parseFloat($min.value || '0');
+      
+      // Filter the list
       let list = items.filter(r => r.score >= min && (!q || r.name.toLowerCase().includes(q)));
+      
+      // Sort the list
       const sort = $sort.value;
-      if (sort === 'score_desc') list.sort((a,b)=>b.score-a.score);
-      if (sort === 'score_asc') list.sort((a,b)=>a.score-b.score);
-      if (sort === 'name_asc') list.sort((a,b)=>a.name.localeCompare(b.name));
-      if (sort === 'name_desc') list.sort((a,b)=>b.name.localeCompare(a.name));
+      if (sort === 'score_desc') list.sort((a, b) => b.score - a.score);
+      if (sort === 'score_asc') list.sort((a, b) => a.score - b.score);
+      if (sort === 'name_asc') list.sort((a, b) => a.name.localeCompare(b.name));
+      if (sort === 'name_desc') list.sort((a, b) => b.name.localeCompare(a.name));
+      
       render(list);
     }
+
+    // Initial render on page load
     applyFilters();
-    for (const el of [$search, $sort, $min]) el.addEventListener('input', applyFilters);
+
+    // Add event listeners to all controls
+    for (const el of [$search, $sort, $min]) {
+      el.addEventListener('input', applyFilters);
+    }
   </script>
 </body>
 </html>
