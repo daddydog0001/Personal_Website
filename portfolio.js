@@ -23,9 +23,27 @@ document.addEventListener('keydown', event => {
 document.addEventListener('click', event => {
   if (!header.contains(event.target)) closeMenu();
 });
-matchMedia('(min-width: 1101px)').addEventListener('change', event => {
-  if (event.matches) closeMenu();
-});
+let navigationFrame;
+function fitNavigation() {
+  cancelAnimationFrame(navigationFrame);
+  navigationFrame = requestAnimationFrame(() => {
+    const inner = header.querySelector('.nav-inner');
+    const brand = header.querySelector('.brand');
+    header.classList.add('is-measuring');
+    const available = inner.clientWidth - brand.getBoundingClientRect().width - 32;
+    const compact = matchMedia('(max-width: 1100px)').matches || navigation.scrollWidth > available;
+    header.classList.remove('is-measuring');
+    if (header.classList.contains('compact-navigation') !== compact) closeMenu();
+    header.classList.toggle('compact-navigation', compact);
+    document.documentElement.style.setProperty('--header-height', `${header.getBoundingClientRect().height}px`);
+  });
+}
+const navigationObserver = new ResizeObserver(fitNavigation);
+navigationObserver.observe(header.querySelector('.nav-inner'));
+navigationObserver.observe(header.querySelector('.brand'));
+document.fonts.ready.then(fitNavigation);
+window.addEventListener('resize', fitNavigation);
+fitNavigation();
 
 const modal = document.querySelector('#imageModal');
 const modalImage = document.querySelector('#expandedImage');
